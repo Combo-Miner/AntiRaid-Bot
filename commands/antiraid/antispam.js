@@ -4,6 +4,7 @@ module.exports = {
     name: "antispam",
     description: "Manage the antispam module",
     requiredPerms: "owner",
+    usage: "antispam <on/off>",
     /**
      * 
      * @param {AntiRaidClient} client 

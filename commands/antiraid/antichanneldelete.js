@@ -4,6 +4,7 @@ module.exports = {
     name: "antichanneldelete",
     description: "Manage the antichanneldelete module",
     requiredPerms: "owner",
+    usage: "antichanneldelete <on/off>",
     /**
      * 
      * @param {AntiRaidClient} client 

@@ -1,11 +1,11 @@
 
 const { Message, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const WhitelistClass = require("../../structure/users/whitelist");
 const AntiRaidClient = require("../../structure/client");
 module.exports = {
     name: "whitelist",
     description: "Manage the guild whitelist",
     requiredPerms: "owner",
+    usage: "whitelist <add/remove/clear/list> <@user>",
     /**
      * 
      * @param {AntiRaidClient} client 

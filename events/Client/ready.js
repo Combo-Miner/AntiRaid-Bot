@@ -4,8 +4,8 @@ module.exports = {
     /**
      * @param {AntiRaidClient} client
      */
-    run: async (client) => {
-
+    run: async (client,emitted) => {
+        if(emitted === true) return;
         console.log(
 
             `███████╗██╗  ██╗███████╗███╗   ███╗██████╗ ██╗     ███████╗    ██████╗  ██████╗ ████████╗\n` +
@@ -16,7 +16,7 @@ module.exports = {
             `╚══════╝╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝    ╚═════╝  ╚═════╝    ╚═╝ \n`
         )
 
-        console.log("By (Unkown) flags64 & Sown (1sown) & Anaïs (2h0)")
+        console.log("By (Unkown) flags64")
 
 
     }

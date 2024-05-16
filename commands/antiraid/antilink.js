@@ -4,6 +4,7 @@ module.exports = {
     name: "antilink",
     description: "Manage the antilink module",
     requiredPerms: "owner",
+    usage: "antilink <on/off>",
     /**
      * 
      * @param {AntiRaidClient} client 

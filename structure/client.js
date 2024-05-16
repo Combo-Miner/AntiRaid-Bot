@@ -1,6 +1,11 @@
-const { Client } = require("discord.js");
+const {
+    Client
+} = require("discord.js");
 const config = require("../config.json")
-const { QuickDB, JSONDriver } = require("quick.db");
+const {
+    QuickDB,
+    JSONDriver
+} = require("quick.db");
 const db = new QuickDB();
 const fs = require("fs");
 const path = require("path");
@@ -11,7 +16,7 @@ class AntiRaidClient extends Client {
         presence: {
             status: "dnd",
             activities: [{
-                name: "anti-raid.xyz exemple bot",
+                name: "discord.gg/anti-raid",
                 type: 4,
                 url: "https://twitch.tv/jesaispasquoimettreici"
 
@@ -31,7 +36,7 @@ class AntiRaidClient extends Client {
         super.login(this.token)
         this._handler();
     }
-    
+
     async _handler() {
         this._handleCommands();
         this._handleEvents(path.join(process.cwd() + "/events"));
@@ -47,11 +52,10 @@ class AntiRaidClient extends Client {
                 const event = require(filePath);
                 if (event.name && event.run && typeof event.run === 'function') {
                     this.on(event.name, (...args) => event.run(this, ...args));
-                    console.log(`New Events`);
                 };
             };
         });
-    }   
+    }
 
     async _handleCommands() {
         const commandDirs = fs.readdirSync("./commands");
@@ -66,7 +70,24 @@ class AntiRaidClient extends Client {
         }
     }
 
-        
+    async isOwner(userID) {
+        if(this.user.id === userID) return true;
+        if (this.owners.includes(userID)) return true;
+        const owners = await this.db.get("owner") || [];
+        return owners.includes(userID)
+   
+    }
+
+    async isWhitelist(userID, guildID) {
+        const guildOwnerID = this.guilds.cache.get(guildID).ownerId;
+        if(guildOwnerID === userID) return true;
+        if(this.user.id === userID) return true;
+        const whitelist = await this.db.get("whitelist_" + guildID) || [];
+        return whitelist.includes(userID)
+    }
+
+
+
 }
 
 module.exports = AntiRaidClient;

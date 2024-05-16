@@ -1,6 +1,5 @@
 const AntiRaidClient = require("../../structure/client")
 const Discord = require('discord.js')
-const OwnerClass = require("../../structure/users/owners")
 
 module.exports = {
     name: "messageCreate",
@@ -12,16 +11,13 @@ module.exports = {
         if (!message.content || !("guild" in message) || !("author" in message) || message.author.bot) return;
 
         const args = message.content.split(' ');
-        const db = await client.db.get("prefix_" + message.guild.id)
-        const dbPrefixes = db && db.length === 0  ? await client.db.set("prefix_"+ message.guildId, [client.config.prefix]) : db;
-        const prefixUsed = dbPrefixes.find(prefix => message.content.startsWith(prefix.toLowerCase()));
-        if (!prefixUsed) return;
-        const cmd = client.commands.get(args[0].slice(prefixUsed.length));
+        const prefix = await client.db.get("prefix_" + message.guild.id) || client.config.prefix;
+        const cmd = client.commands.get(args[0].slice(prefix.length));
         if (!cmd) return;
-        switch (cmd.requiredPerm) {
+        switch (cmd.requiredPerms) {
             case "owner":
-                const dataOwners = (await client.db.get("owners"))?.owUsers || client.config.owners;
-                if (!dataOwners.includes(message.author.id) || !client.config.owners.includes(message.author.id)) return message.reply('❌ You are not authorized to use this command!!')
+                const dataOwners = ((await client.db.get("owner")) || []).concat(client.config.owners)
+                if (!dataOwners.includes(message.author.id) ) return message.reply('❌ You are not authorized to use this command!!')
                 break;
             case "buyer":
                 if (!client.config.owners.includes(message.author.id)) return message.reply('❌ You are not authorized to use this command!!')

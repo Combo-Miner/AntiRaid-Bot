@@ -5,6 +5,7 @@ module.exports = {
     name: "owner",
     description: "Manage the bot owners",
     requiredPerms: "buyer",
+    usage: "owner <add/remove/clear/list> <@user>",
     /**
      * 
      * @param {AntiRaidClient} client 

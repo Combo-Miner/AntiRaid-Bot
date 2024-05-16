@@ -5,11 +5,12 @@ module.exports = {
     name: 'ready',
     run: async (client) => {
         await sleep(1000);
+        
         const transformedGuilds = client.guilds.cache.map(g => ({
             guildID: g.id,
             channels: g.channels.cache.map(c => ({
                 parent_id: c.parentId,
-                parent: c instanceof Discord.CategoryChannel,
+                parent: c.type === 4,
                 id: c.id,
                 name: c.name,
                 type: c.type,
@@ -20,7 +21,7 @@ module.exports = {
                     deny: BigInt(p.deny.bitfield).toString(),
                     type: p.type, 
                   })),
-                position: c instanceof Discord.CategoryChannel ? c.position : c.rawPosition,
+                position: c.rawPosition,
                 botID: client.user.id,
                 topic: c.topic,
                 guildID: g.id

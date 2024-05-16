@@ -1,9 +1,10 @@
 const Discord = require('discord.js')
 const AntiRaidClient = require('../../structure/client');
 module.exports = {
-    name: "antiChannelUpdate",
+    name: "antichannelupdate",
     description: "Manage the AntiChannelUpdate module",
     requiredPerms: "owner",
+    usage: "antichannelupdate <on/off>",
     /**
      * 
      * @param {AntiRaidClient} client 
